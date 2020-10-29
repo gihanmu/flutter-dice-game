@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +17,24 @@ void main() {
   );
 }
 
-class DicePage extends StatelessWidget {
+int getRandomDiceNumber() {
+  return 1 + new Random().nextInt(6);
+}
+
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber = getRandomDiceNumber();
+  int rightDiceNumber = getRandomDiceNumber();
+
+  void changeDiceFace() {
+    leftDiceNumber = getRandomDiceNumber();
+    rightDiceNumber = getRandomDiceNumber();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -23,18 +42,26 @@ class DicePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+            child: FlatButton(
+              onPressed: () {
+                setState(() {
+                  changeDiceFace();
+                });
+              },
               child: Image(
-                image: AssetImage('images/dice1.png'),
+                image: AssetImage('images/dice$leftDiceNumber.png'),
               ),
             ),
           ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+            child: FlatButton(
+              onPressed: () {
+                setState(() {
+                  changeDiceFace();
+                });
+              },
               child: Image(
-                image: AssetImage('images/dice2.png'),
+                image: AssetImage('images/dice$rightDiceNumber.png'),
               ),
             ),
           )
